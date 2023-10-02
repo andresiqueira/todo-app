@@ -1,17 +1,23 @@
 const knex = require('../db/knexconfig')
-const queryBuilder = require('../utils/queryBuilder')
 
 class Todo {
   async getAllTodo(req, res) {
     const { query } = req
-    const queryData = await queryBuilder(query)
-
-    console.log(queryData)
 
     try {
       const data = await knex('todo')
-      .where({...queryData})
-      .orderBy([{ column: 'is_favorite', order: 'desc' }, { column: 'created_at', order: 'desc'}])
+        .modify(function (queryBuilder) {
+          if (query.title) {
+            queryBuilder.where('title', 'like', `%${query.title}%`);
+          }
+          if (query.container_color) {
+            queryBuilder.where('container_color', 'like', `%${query.container_color}%`);
+          }
+          if (query.is_favorite) {
+            queryBuilder.where('is_favorite', 'like', `%${query.is_favorite}%`);
+          }
+        })
+        .orderBy([{ column: 'is_favorite', order: 'desc' }, { column: 'created_at', order: 'desc' }])
 
       res.status(200).json({ message: "Get all todo", data: data })
 
@@ -44,7 +50,7 @@ class Todo {
       title: body.title,
       description: body.description,
       status: body.status,
-      is_favorite: body. isFavorite,
+      is_favorite: body.isFavorite,
       container_color: body.containerColor,
       created_at: new Date()
     }
@@ -65,7 +71,7 @@ class Todo {
       title: body.title,
       description: body.description,
       status: body.status,
-      is_favorite: body. isFavorite,
+      is_favorite: body.isFavorite,
       container_color: body.containerColor,
       updated_at: new Date()
     }
@@ -89,7 +95,7 @@ class Todo {
 
     try {
       const data = await knex('todo').where({ id: params.id }).delete()
-      
+
       if (data === 0) {
         throw "Data does not exist"
       }
