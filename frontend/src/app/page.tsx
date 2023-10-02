@@ -54,9 +54,9 @@ export default function Home() {
     <div className='flex flex-col items-center max-w-[160rem] m-auto relative'>
       <Header data={setData} />
       <FormCard emitter={setEmitter} />
-      <div className='grid xl:grid-cols-3 gap-9 max-w-max px-24 pb-14'>
+      <div className='grid relative xl:grid-cols-3 gap-9 max-w-max px-24 pb-14'>
         {
-          loading ? (<span>Carregando...</span>) :
+          loading ? (<span style={{left: "calc(50% - 51px)"}} className='absolute -top-8'>Carregando...</span>) :
           data?.map(({ id, title, description, is_favorite, container_color }: DataProps) => (
             <Card key={id} todoId={id} title={title} description={description} isFavorite={is_favorite} containerColor={container_color} emitter={setEmitter} />
           ))
