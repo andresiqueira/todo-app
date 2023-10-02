@@ -1,7 +1,7 @@
 FROM node:16 as node-builder
 WORKDIR /modules
 COPY package.json .
-RUN apt-get update
+# RUN apt-get update
 RUN npm install
 
 FROM node:16
