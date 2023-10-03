@@ -2,7 +2,7 @@
 
 A TODO project that contains a Back-End with Node.JS API Container, Front-End with React.Js Container and Database mySql Container.
 
-To run the project you must have docker installed first. Go to the root path project and execute the command below on your terminal, ensure that the http port 3000 and 3009 are free. After wait about two minutes to ensure that all of containers is up and the project is running, then open the URL in your browser.
+To run the project you must have docker installed first. Go to the root path project and execute the command below on your terminal, ensure that the http port 3000, 3306 and 3009 are free. After wait about two minutes to ensure that all of containers is up and the project is running, then open the URL in your browser.
 
 #### Running the project:
 ```
@@ -40,7 +40,7 @@ If you want to test the API using somenthing like Postman, Insomnia or something
 #### Queries accepted
 
 ```
-title, description, status, is_favorite and container_color
+title, is_favorite and container_color
 }
 ```
 
