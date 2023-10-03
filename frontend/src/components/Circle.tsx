@@ -6,9 +6,10 @@ interface CircleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color: string;
   todoId: number;
   emitter: Dispatch<React.SetStateAction<string>>;
+  error: Dispatch<React.SetStateAction<string>>;
   setColor: Dispatch<React.SetStateAction<DataProps>>;
 }
-const Circle = ({ color, todoId, emitter, setColor, ...rest }: CircleProps) => {
+const Circle = ({ color, error, todoId, emitter, setColor, ...rest }: CircleProps) => {
 
   const handleEdit = async () => {
     if (!todoId) return
@@ -27,6 +28,7 @@ const Circle = ({ color, todoId, emitter, setColor, ...rest }: CircleProps) => {
       })
 
       setColor && setColor((prev: any) => { return { ...prev, containerColor: color } })
+      error('')
       emitter && emitter(String(new Date))
     } catch (error) {
       console.log("Erro ao mudar cor do card", error)

@@ -12,6 +12,7 @@ export interface CardProps extends FormHTMLAttributes<HTMLFormElement> {
   isFavorite: number;
   containerColor: string;
   emitter: Dispatch<SetStateAction<string>>
+  error: Dispatch<SetStateAction<string>>
 }
 
 export interface DataProps {
@@ -26,7 +27,8 @@ const Card = ({
   description,
   isFavorite,
   containerColor,
-  emitter
+  emitter,
+  error
 }: CardProps) => {
   const [editable, setEditable] = useState<boolean>(false)
   const [data, setData] = useState<DataProps>({
@@ -55,6 +57,7 @@ const Card = ({
         }
       })
 
+      error('')
       setEditable(false)
     } catch (error) {
       console.log("Erro ao atualizar dados do card: ", error)
@@ -79,7 +82,7 @@ const Card = ({
               ref={inputTitleRef}
             />
         }
-        <CardFavoriteButton todoId={todoId} emitter={emitter} isFavorite={isFavorite} />
+        <CardFavoriteButton todoId={todoId} emitter={emitter} isFavorite={isFavorite} error={error}/>
       </div>
       <div className="h-full px-[1.625rem] py-[0.875rem]">
         {
@@ -95,7 +98,7 @@ const Card = ({
       </div>
       <div className="flex flex-row gap-3 px-[1.625rem] py-[0.6875rem]">
         <EditButton handleEdit={setEditable} />
-        <ColorPicker id={todoId} emitter={emitter} setColor={setData} />
+        <ColorPicker id={todoId} emitter={emitter} setColor={setData} error={error}/>
         {
           editable && <button className="text-sm" type="button" onClick={handleEdit}>Salvar</button>
         }

@@ -7,9 +7,11 @@ import SearchFilter from "./SearchFilter";
 
 interface HeaderProps {
   data: Dispatch<SetStateAction<TodoProps[] | null>>;
+  setError: Dispatch<SetStateAction<string>>;
+  error: string;
 }
 
-const Header = ({data}: HeaderProps) => {
+const Header = ({data, error, setError}: HeaderProps) => {
   return (
     <div className="flex flex-row items-center w-full gap-[1.125rem] h-[4.5rem] bg-white shadow-tertiary-shadow px-7 box-border overflow-hidden">
       <Image
@@ -19,9 +21,9 @@ const Header = ({data}: HeaderProps) => {
         height={36}
       />
       <h1 className="hidden md:block">CoreNotes</h1>
-      <SearchBar setData={data} />
-      <SearchFilter setData={data}/>
-      <ResetButton setData={data} className="self-center ml-auto"/>
+      <SearchBar setData={data} error={error} setError={setError}/>
+      <SearchFilter setData={data} error={error} setError={setError}/>
+      <ResetButton setData={data} setError={setError} className="self-center ml-auto"/>
     </div>
   )
 }

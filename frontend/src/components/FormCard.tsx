@@ -10,9 +10,10 @@ const formSchema = yup.object().shape({
 
 interface FormCardProps extends FormHTMLAttributes<HTMLFormElement> {
   emitter: Dispatch<SetStateAction<string>>;
+  error: Dispatch<SetStateAction<string>>;
 }
 
-const FormCard = ({ emitter, ...rest }: FormCardProps) => {
+const FormCard = ({ emitter, error, ...rest }: FormCardProps) => {
   const [favorite, setFavorite] = useState<boolean>(false);
   const [values, setValues] = useState<{ input: string, textarea: string }>({
     input: '',
@@ -50,7 +51,7 @@ const FormCard = ({ emitter, ...rest }: FormCardProps) => {
         textarea: '',
       })
       setFavorite(false)
-
+      error('')
       emitter(String(new Date));
     } catch (e) {
       if (e instanceof yup.ValidationError) {

@@ -34,11 +34,14 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false)
   const [emitter, setEmitter] = useState<string>('')
 
+  const [error, setError] = useState<string>('false')
+
   const handleResponseApi = async () => {
     try {
       setLoading(true)
       const result = await fetchApi({})
       setData(result.data)
+      setError('')
       setLoading(false)
     } catch (error) {
       console.log("Erro ao listar todos: ", error)
@@ -52,14 +55,23 @@ export default function Home() {
 
   return (
     <div className='flex flex-col items-center max-w-[160rem] m-auto relative'>
-      <Header data={setData} />
-      <FormCard emitter={setEmitter} />
-      <div className='grid relative xl:grid-cols-3 gap-9 max-w-max px-24 pb-14'>
+      <Header data={setData} error={error} setError={setError}/>
+      <FormCard emitter={setEmitter} error={setError}/>
+      <div className='grid relative lg:grid-cols-2 xl:grid-cols-3 gap-9 max-w-max px-24 pb-14'>
         {
-          loading ? (<span style={{left: "calc(50% - 51px)"}} className='absolute -top-8'>Carregando...</span>) :
-          data?.map(({ id, title, description, is_favorite, container_color }: DataProps) => (
-            <Card key={id} todoId={id} title={title} description={description} isFavorite={is_favorite} containerColor={container_color} emitter={setEmitter} />
-          ))
+          loading ? (<span style={{ left: "calc(50% - 3.1875rem)" }} className='absolute -top-8'>Carregando...</span>) :
+            data?.map(({ id, title, description, is_favorite, container_color }: DataProps) => (
+              <Card
+                key={id}
+                todoId={id}
+                title={title}
+                description={description}
+                isFavorite={is_favorite}
+                containerColor={container_color}
+                emitter={setEmitter}
+                error={setError}
+              />
+            ))
         }
       </div>
     </div>

@@ -7,10 +7,11 @@ import { DataProps } from './Card';
 interface ColorPickerProps {
   id: number;
   emitter: Dispatch<SetStateAction<string>>;
+  error: Dispatch<SetStateAction<string>>;
   setColor: Dispatch<SetStateAction<DataProps>>;
 }
 
-const ColorPicker = ({ id, emitter, setColor }: ColorPickerProps) => {
+const ColorPicker = ({ id, emitter, setColor, error }: ColorPickerProps) => {
 
   return (
     <Popover className="relative h-[1.875rem] ">
@@ -36,7 +37,7 @@ const ColorPicker = ({ id, emitter, setColor }: ColorPickerProps) => {
           <div className="grid-rows-2 w-[18.125rem] lg:flex lg:flex-row items-center lg:w-[34.375rem] lg:h-[3.125rem] bg-[#FFFFFF] border px-3 py-1 border-primary-border rounded-[0.5625rem] shadow-secondary-shadow">
             {
               palletColors.map((color) => (
-                <Circle key={color} color={color} todoId={id} emitter={emitter} setColor={setColor} />
+                <Circle key={color} color={color} todoId={id} emitter={emitter} setColor={setColor} error={error} />
               ))
             }
           </div>

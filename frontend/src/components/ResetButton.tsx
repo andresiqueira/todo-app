@@ -4,12 +4,14 @@ import { ButtonHTMLAttributes, Dispatch, SetStateAction } from "react"
 
 interface RemoveButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   setData: Dispatch<SetStateAction<TodoProps[]|null>>;
+  setError: Dispatch<SetStateAction<string>>;
 }
 
-const ResetButton = ({ setData, ...rest }: RemoveButtonProps) => {
+const ResetButton = ({ setData, setError, ...rest }: RemoveButtonProps) => {
   const handleReset = async () => {
     try {
       const result = await fetchApi({})
+      setError('')
       setData(result.data)
     } catch (error) {
       console.log("Erro ao recarregar dados: ", error)

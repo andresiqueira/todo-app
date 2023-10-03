@@ -4,10 +4,11 @@ import { ButtonHTMLAttributes, Dispatch, SetStateAction, useState } from "react"
 interface FavoriteButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   todoId: number;
   emitter: Dispatch<SetStateAction<string>>;
+  error: Dispatch<SetStateAction<string>>;
   isFavorite: number;
 }
 
-const CardFavoriteButton = ({ todoId, emitter, isFavorite, ...rest } : FavoriteButtonProps) => {
+const CardFavoriteButton = ({ todoId, emitter, error, isFavorite, ...rest } : FavoriteButtonProps) => {
   const [favorite, setFavorite] = useState<boolean>(isFavorite ? true : false)
   
   const color = favorite === true ? "#FFA000" : "#FFFFFF"
@@ -28,6 +29,7 @@ const CardFavoriteButton = ({ todoId, emitter, isFavorite, ...rest } : FavoriteB
         })
       }})
 
+      error('')
       emitter && emitter(String(new Date))
     } catch (error) {
       console.log("Erro ao marcar card como favorito: ", error)
